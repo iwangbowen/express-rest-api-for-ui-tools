@@ -17,7 +17,7 @@ export default ({ config, db }) => resource({
 
 	/** GET / - List all entities */
 	index({ params }, res) {
-		res.json(companies);
+		res.json({data: companies});
 	},
 
 	/** POST / - Create a new entity */

@@ -1,15 +1,15 @@
 const countries = [
     {
-        value: 'China',
-        text: 'China'
+        v: '1',
+        t: 'China'
     },
     {
-        value: 'Russia',
-        text: 'Russia'
+        v: '2',
+        t: 'Russia'
     },
     {
-        value: 'Japan',
-        text: 'Japan'
+        v: '3',
+        t: 'Japan'
     }
 ];
 export default countries;
