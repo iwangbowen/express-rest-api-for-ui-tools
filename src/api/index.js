@@ -4,6 +4,7 @@ import facets from './facets';
 import companies from './companies';
 import countries from './countries';
 import data from './data';
+import multi_data from './multi-data';
 
 export default ({ config, db }) => {
 	let api = Router();
@@ -13,6 +14,7 @@ export default ({ config, db }) => {
 	api.use('/companies', companies({ config, db }));
 	api.use('/countries', countries({ config, db }));
 	api.use('/data', data({config, db}));
+	api.use('/multidata', multi_data({config, db}));
 
 	// perhaps expose some API metadata at the root
 	api.get('/', (req, res) => {

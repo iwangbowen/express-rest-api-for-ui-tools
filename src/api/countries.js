@@ -22,9 +22,7 @@ export default ({ config, db }) => resource({
 
 	/** POST / - Create a new entity */
 	create({ body }, res) {
-		body.id = countries.length.toString(36);
-		countries.push(body);
-		res.json(body);
+		res.json({data: countries});
 	},
 
 	/** GET /:id - Return a given entity */

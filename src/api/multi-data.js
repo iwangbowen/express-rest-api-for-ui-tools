@@ -1,5 +1,6 @@
 import resource from 'resource-router-middleware';
-import data from '../models/data';
+import countries from '../models/countries';
+import companies from '../models/companies'
 
 export default ({ config, db }) => resource({
 
@@ -10,19 +11,25 @@ export default ({ config, db }) => resource({
 	 *  Errors terminate the request, success sets `req[id] = data`.
 	 */
 	load(req, id, callback) {
-		let facet = data.find( facet => facet.id===id ),
+		let facet = countries.find( facet => facet.id===id ),
 			err = facet ? null : 'Not found';
 		callback(err, facet);
 	},
 
 	/** GET / - List all entities */
 	index({ params }, res) {
-		res.json({data: data.slice(0, 100)});
+		res.json({data: {
+            countries,
+            companies
+        }});
 	},
 
 	/** POST / - Create a new entity */
 	create({ body }, res) {
-		res.json({data: data});
+		res.json({data: {
+            countries,
+            companies
+        }});
 	},
 
 	/** GET /:id - Return a given entity */
@@ -42,7 +49,7 @@ export default ({ config, db }) => resource({
 
 	/** DELETE /:id - Delete a given entity */
 	delete({ facet }, res) {
-		data.splice(data.indexOf(facet), 1);
+		countries.splice(countries.indexOf(facet), 1);
 		res.sendStatus(204);
 	}
 });
