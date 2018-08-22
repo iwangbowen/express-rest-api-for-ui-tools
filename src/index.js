@@ -7,6 +7,7 @@ import initializeDb from './db';
 import middleware from './middleware';
 import api from './api';
 import config from './config.json';
+
 const fileUpload = require('express-fileupload');
 
 let app = express();
@@ -30,13 +31,15 @@ app.post('/api/upload', function (req, res) {
 	if (!req.files)
 		return res.status(400).send('No files were uploaded.');
 	// The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-	Object.values(req.files).forEach(file => {
-		file.mv(`./upload/${file.name}`, err => {
-			if (err)
-				return res.status(500).send(err);
-			res.send('File uploaded!');
-		});
-	});
+	const pendings = Object.values(req.files).reduce((prev, file) => {
+		const [name, ext] = file.name.split('\.');
+		const mv = require('util').promisify(file.mv);
+		prev.push(mv(`./uploads/${name}${Date.now()}.${ext}`));
+		return prev;
+	}, []);
+	Promise.all(pendings)
+		.then(() => res.send('File uploaded!'))
+		.catch(err => res.status(500).send(err));
 });
 
 // connect to db
