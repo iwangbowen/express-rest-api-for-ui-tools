@@ -1,4 +1,5 @@
 import resource from 'resource-router-middleware';
+import data from '../models/data';
 
 export default ({ config, db }) => resource({
     /** Property name to store preloaded entity on `request`. */
@@ -16,7 +17,7 @@ export default ({ config, db }) => resource({
             return prev;
         }, []);
         Promise.all(pendings)
-            .then(() => res.json({ data: 'File uploaded!' }))
+            .then(() => res.json({ data }))
             .catch(err => res.status(500).send(err));
     },
 });
