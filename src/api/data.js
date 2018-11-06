@@ -1,5 +1,6 @@
 import resource from 'resource-router-middleware';
 import data from '../models/data';
+import _ from 'lodash';
 
 export default ({ config, db }) => resource({
 	/** Property name to store preloaded entity on `request`. */
@@ -14,11 +15,15 @@ export default ({ config, db }) => resource({
 	},
 	/** GET / - List all entities */
 	index({ params }, res) {
-		res.json({ data: data.slice(0, 100) });
+		res.json({
+			data: _.shuffle(data.slice(0, 100))
+		});
 	},
 	/** POST / - Create a new entity */
 	create({ body }, res) {
-		res.json({ data: data });
+		res.json({
+			data: _.shuffle(data.slice(0, 100))
+		});
 	},
 	/** GET /:id - Return a given entity */
 	read({ facet }, res) {
