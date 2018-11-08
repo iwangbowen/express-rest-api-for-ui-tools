@@ -1,6 +1,6 @@
 import resource from 'resource-router-middleware';
 import countries from '../models/countries';
-import companies from '../models/companies'
+import images from '../models/images';
 import data from '../models/data';
 import _ from 'lodash';
 
@@ -17,12 +17,18 @@ export default ({ config, db }) => resource({
     },
     /** GET / - List all entities */
     index({ params }, res) {
-        res.json(_.shuffle(data.slice(0, 100))[0]);
+        res.json({
+            ..._.shuffle(data.slice(0, 100))[0],
+            ...images
+        });
     },
     /** POST / - Create a new entity */
     create({ body }, res) {
         res.json({
-            data: _.shuffle(data.slice(0, 100))[0]
+            data: {
+                ..._.shuffle(data.slice(0, 100))[0],
+                ...images
+            }
         });
     },
     /** GET /:id - Return a given entity */
